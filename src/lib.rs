@@ -101,7 +101,7 @@ pub fn pda_create_token_manager(program_id: &Pubkey ,accounts: &[AccountInfo]) -
     let seeds_with_bump: &[&[u8]] = &[b"token_manager",&[seeds_bump]];
     
     Check::check_whitelist(payer_account)?;
-    Check::check_token_manager(pda_to_create, program_id)?;
+    //Check::check_token_manager(pda_to_create, program_id)?;
     Check::check_system_program(system_program_account)?;
 
     let instruction_pda_create_token_manager = system_instruction::create_account(
@@ -141,7 +141,7 @@ pub fn pda_create_token_vault(program_id: &Pubkey ,accounts: &[AccountInfo]) -> 
     let seeds_with_bump: &[&[u8]] = &[b"token_vault",&[seeds_bump]];
     
     Check::check_whitelist(payer_account)?;
-    Check::check_pda_vault(pda_vault, program_id)?;
+    //Check::check_pda_vault(pda_vault, program_id)?;
     Check::check_system_program(system_program_account)?;
 
     let instruction_pda_create_token_vault = system_instruction::create_account(

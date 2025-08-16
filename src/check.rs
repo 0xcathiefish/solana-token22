@@ -18,7 +18,7 @@ impl Check {
 
         const WHITELISTED_USER: [Pubkey;1] = [
 
-            pubkey!("77rsjhmcMZYPCzZaU6Y8oq5QBVKVgXzRPzpPdiMEBrEx"),
+            pubkey!("FDwjFcoeDPBjXG6sDoMMaK6hbLZV8avbDAgZj4fasmDx"),
         ];
 
         if !WHITELISTED_USER.contains(payer_account.key) || !payer_account.is_signer {

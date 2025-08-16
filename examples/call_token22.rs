@@ -1,3 +1,6 @@
+#![allow(unexpected_cfgs)]
+#![allow(deprecated)] 
+
 use token22::{
 
     instruction::TokenInstruction
@@ -30,20 +33,22 @@ use serde_json;
 const RPC_DEV: &str = "https://api.devnet.solana.com";
 
 // TODO: Fill these after deployment
-const PROGRAM_ID: Pubkey = Pubkey::new_from_array([239, 147, 167, 11, 137, 173, 81, 7, 45, 177, 98, 9, 207, 233, 11, 12, 248, 90, 224, 131, 209, 182, 255, 217, 30, 208, 69, 110, 188, 40, 45, 52]);
+const PROGRAM_ID: Pubkey = Pubkey::new_from_array([121, 54, 71, 19, 18, 185, 110, 94, 126, 174, 70, 160, 111, 206, 57, 13, 94, 64, 99, 152, 153, 185, 145, 122, 29, 232, 183, 167, 65, 83, 127, 216]);
 
 // TODO: Fill these after PDA creation
-const PDA_TOKEN_MANAGER: Pubkey = Pubkey::new_from_array([69, 182, 85, 222, 205, 145, 25, 58, 69, 10, 117, 82, 235, 87, 214, 105, 180, 62, 160, 222, 108, 124, 150, 181, 4, 116, 133, 119, 152, 240, 213, 229]);
-const PDA_TOKEN_VAULT: Pubkey = Pubkey::new_from_array([58, 64, 241, 113, 23, 69, 205, 219, 50, 208, 52, 181, 39, 88, 232, 207, 122, 45, 189, 232, 156, 176, 108, 251, 202, 238, 92, 118, 37, 195, 64, 105]);
+const PDA_TOKEN_MANAGER: Pubkey = Pubkey::new_from_array([27, 184, 188, 192, 255, 221, 163, 23, 174, 24, 116, 88, 155, 229, 136, 8, 165, 226, 110, 31, 237, 117, 237, 71, 101, 117, 233, 160, 216, 108, 254, 59]);
 
-// 52BiecVgCC2kPQxyozuwfeKno5yq5DBUN3SqVXzLLyZt
-const MINT_TOKEN: Pubkey = Pubkey::new_from_array([59, 188, 114, 142, 64, 167, 231, 55, 37, 59, 175, 209, 49, 189, 204, 239, 15, 240, 215, 62, 199, 247, 39, 60, 119, 125, 139, 21, 44, 9, 252, 155]);
+// PDA Token vault 
+const PDA_TOKEN_VAULT: Pubkey = Pubkey::new_from_array([3, 244, 112, 7, 50, 40, 105, 99, 35, 233, 197, 192, 104, 112, 123, 247, 46, 162, 126, 85, 255, 221, 197, 38, 108, 196, 50, 97, 243, 88, 95, 194]);
 
-// h3SEXeN7a9Nq5NXuMmqgSGg3u31LXf2o4wNV3ZmHJyn
-const TOKEN_VAULT_ATA: Pubkey = Pubkey::new_from_array([10, 65, 252, 86, 39, 26, 140, 176, 143, 30, 244, 11, 199, 246, 205, 236, 228, 178, 122, 16, 130, 211, 115, 243, 23, 206, 78, 217, 207, 152, 209, 1]);
+// 984ryKUWtuvaRpdPkBbGdfkH8oAUNRwF2z8suEyoUKcw
+//const MINT_TOKEN: Pubkey = Pubkey::new_from_array([120, 172, 237, 103, 194, 5, 24, 3, 84, 146, 224, 191, 132, 68, 241, 68, 124, 69, 127, 166, 10, 78, 171, 149, 98, 252, 27, 245, 228, 166, 82, 4]);
 
-// 4hz8Qf1BE2jpGV5NSvkV1bq5bXCKMVLyte7VjCMsVoGR
-const USER_ATA: Pubkey = Pubkey::new_from_array([55, 18, 227, 61, 221, 60, 4, 20, 107, 82, 247, 247, 30, 66, 122, 86, 149, 191, 218, 62, 210, 47, 218, 71, 110, 169, 184, 186, 89, 2, 219, 182]);
+// 9LTJet2SbyRW2KCnLpY7WJHcN9Sp5S3b77RkZZeRSjuH
+//const TOKEN_VAULT_ATA: Pubkey = Pubkey::new_from_array([123, 217, 69, 241, 227, 159, 106, 125, 198, 128, 133, 251, 192, 222, 196, 226, 138, 231, 253, 20, 95, 198, 211, 179, 105, 212, 247, 46, 222, 37, 150, 72]);
+
+// 47zz3JfQD7FnM9QSK82VVdytmdDQd4W715zoRiTeNr6e
+//const USER_ATA: Pubkey = Pubkey::new_from_array([46, 94, 27, 147, 176, 9, 143, 163, 157, 54, 120, 37, 60, 81, 214, 207, 165, 239, 252, 6, 108, 14, 107, 236, 80, 191, 114, 232, 154, 153, 132, 67]);
 
 
 fn main() {
@@ -55,6 +60,9 @@ fn main() {
 
     info!("Load program id and rpc connect");
 
+    //let USER_ATA = "9R18WG6CDnHpsnkTuKw7wiEXgijed1j9Y3w9QRnqNcJU".parse().unwrap();
+    //let TOKEN_VAULT_ATA = "ECKjX2uJDbRAoaYxaqwkoAkLMagNtg3xNsUGu8FyBSsg".parse().unwrap();
+    //let MINT_TOKEN = "984ryKUWtuvaRpdPkBbGdfkH8oAUNRwF2z8suEyoUKcw".parse().unwrap();
 
     let wallet_string = fs::read_to_string("/home/xiannvweideta/.config/solana/dev.json").unwrap();
     let keypair_bytes: Vec<u8> = serde_json::from_str(&wallet_string).unwrap();
@@ -108,6 +116,7 @@ fn main() {
 
     // Generate new mint account
     let token_mint_account = Keypair::new();
+    let MINT_TOKEN = token_mint_account.pubkey();
     info!("New Token Mint: {}", token_mint_account.pubkey());
 
     let rent = sysvar::rent::id();
@@ -119,6 +128,8 @@ fn main() {
         &spl_token_2022::ID, // Use the correct Token-2022 Program ID
     );
 
+    let USER_ATA = user_ata;
+
     info!("user_ata: {}", user_ata);
 
     // Calculate Vault ATA 
@@ -127,6 +138,8 @@ fn main() {
         &MINT_TOKEN,  // mint
         &spl_token_2022::ID, // Use the correct Token-2022 Program ID
     );
+
+    let TOKEN_VAULT_ATA = vault_ata;
     
     info!("Vault ATA: {}", vault_ata);
 
@@ -220,7 +233,7 @@ fn main() {
 
         PROGRAM_ID,
         &TokenInstruction::TokenTransfer { 
-            amount_to_transfer: 500_000_000 // Transfer 500 tokens from vault to user
+            amount_to_transfer: 5000_000_000 // Transfer 500 tokens from vault to user
         }.pack(),
         vec![
 
@@ -245,10 +258,10 @@ fn main() {
             // Execute in sequence:
             //instruction_create_token_manager,     // 1. Create Token Manager PDA
             //instruction_create_token_vault,       // 2. Create Token Vault PDA  
-            //instruction_create_mint,              // 3. Create Token Mint
-            //instruction_create_ata_for_vault,     // 4. Create ATA for Vault
-            //instruction_create_ata_for_user,      // 5. Create ATA for User
-            //instruction_mint_to_vault,            // 6. Mint tokens to vault
+            instruction_create_mint,              // 3. Create Token Mint
+            instruction_create_ata_for_vault,     // 4. Create ATA for Vault
+            instruction_create_ata_for_user,      // 5. Create ATA for User
+            instruction_mint_to_vault,            // 6. Mint tokens to vault
             instruction_transfer_from_vault,      // 7. Transfer tokens from vault to user
         ], 
 
@@ -257,7 +270,7 @@ fn main() {
 
 
     let recent_blockhash = client.get_latest_blockhash().expect("Failed to get recent blockhash");
-    transaction.sign(&[&payer], recent_blockhash);
+    transaction.sign(&[&payer,&token_mint_account], recent_blockhash);
     
     // 发送交易
     info!("正在调用 Token22 程序...");
